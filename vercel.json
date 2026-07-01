@@ -1,5 +1,6 @@
 {
   "rewrites": [
-    { "source": "/", "destination": "/pemweb project.html" }
+    { "source": "/api/(.*)", "destination": "/backend/server.js" },
+    { "source": "/", "destination": "/frontend/pemweb project1.html" }
   ]
 }
