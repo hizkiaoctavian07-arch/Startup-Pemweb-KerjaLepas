@@ -122,7 +122,7 @@ function handleLoginServer(e) {
 
         alert(`Login Berhasil! Selamat datang, ${data.user.nama}.`);
 
-        window.location.href = "pemweb project1.html";
+        window.location.href = "index.html";
 
     } else {
 
