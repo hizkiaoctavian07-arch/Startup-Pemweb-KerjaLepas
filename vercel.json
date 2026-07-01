@@ -1,5 +1,5 @@
 {
   "rewrites": [
-    { "source": "/", "destination": "/pemweb project.html" }
+    { "source": "/", "destination": "/pemweb project1.html" }
   ]
 }
