@@ -1,5 +1,5 @@
 import express from "express";
-import Transaksi from "../models/Transaksi.js";
+import Transaksi from "../models/transaksi.js";
 import { verifikasiToken } from "../middleware/authMiddleware.js";
 import { hanyaAdmin } from "../middleware/roleMiddleware.js";
 
