@@ -1,7 +1,7 @@
 // script.js - Logika State Engine & Integrasi REST API MongoDB Atlas
 
 
-const API_BASE_URL = "http://localhost:5000/api";
+const API_BASE_URL = "https://startup-pemweb-kerjalepas-production.up.railway.app/api";
 var transactions = [];
 var mobileMenuBtn, mobileMenu;
 
