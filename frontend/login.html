@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sesi Masuk - KerjaLepas Amikom</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "amikom-purple": "#7c3aed",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body
+    class="bg-gradient-to-br from-indigo-900 via-purple-900 to-slate-900 min-h-screen flex items-center justify-center p-4"
+  >
+    <div class="bg-white rounded-3xl shadow-2xl p-8 w-full max-w-md">
+      <div class="text-center mb-6">
+        <div
+          class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-purple-100 text-amikom-purple mb-3"
+        >
+          <i class="fa-solid fa-graduation-cap text-xl"></i>
+        </div>
+        <h1 class="text-xl font-black text-slate-800 tracking-tight">
+          KerjaLepas
+        </h1>
+        <p
+          class="text-xs font-semibold text-slate-400 tracking-wider uppercase mt-0.5"
+        >
+          Universitas Amikom Purwokerto
+        </p>
+      </div>
+
+      <div id="wrapper-login">
+        <h2 class="text-lg font-bold text-slate-700 text-center mb-1">
+          Selamat Datang Kembali
+        </h2>
+        <p class="text-xs text-slate-400 text-center mb-6">
+          Silakan masuk untuk mengelola transaksi database Anda
+        </p>
+
+        <form id="login-form" class="space-y-4">
+          <div>
+            <label class="block text-xs font-bold uppercase text-slate-500 mb-1"
+              >Alamat Email</label
+            >
+            <div class="relative">
+              <input
+                type="email"
+                id="login-email"
+                required
+                class="w-full px-4 py-2.5 pl-10 rounded-xl border border-slate-200 focus:border-amikom-purple focus:ring-4 focus:ring-purple-100 focus:outline-none transition-all text-sm text-slate-700"
+                placeholder="nama@email.com"
+              />
+              <i
+                class="fa-solid fa-envelope absolute left-4 top-3.5 text-slate-400 text-xs"
+              ></i>
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase text-slate-500 mb-1"
+              >Kata Sandi</label
+            >
+            <div class="relative">
+              <input
+                type="password"
+                id="login-password"
+                required
+                class="w-full px-4 py-2.5 pl-10 rounded-xl border border-slate-200 focus:border-amikom-purple focus:ring-4 focus:ring-purple-100 focus:outline-none transition-all text-sm text-slate-700"
+                placeholder="••••••••"
+              />
+              <i
+                class="fa-solid fa-lock absolute left-4 top-3.5 text-slate-400 text-xs"
+              ></i>
+            </div>
+          </div>
+          <button
+            type="submit"
+            class="w-full py-3 bg-amikom-purple text-white font-semibold rounded-xl hover:bg-purple-700 active:scale-[0.98] transition-all text-sm shadow-lg shadow-purple-200 mt-2"
+          >
+            Masuk Sekarang
+          </button>
+        </form>
+        <div class="text-center mt-6">
+          <p class="text-xs text-slate-500">
+            Belum memiliki akun?
+            <button
+              onclick="toggleFormAuth('register')"
+              class="text-amikom-purple font-bold hover:underline focus:outline-none"
+            >
+              Daftar di sini
+            </button>
+          </p>
+        </div>
+      </div>
+
+      <div id="wrapper-register" class="hidden">
+        <h2 class="text-lg font-bold text-slate-700 text-center mb-1">
+          Buat Akun Baru
+        </h2>
+        <p class="text-xs text-slate-400 text-center mb-6">
+          Gabung dan temukan talenta freelance terbaik kampus
+        </p>
+
+        <form id="register-form" class="space-y-4">
+          <div>
+            <label class="block text-xs font-bold uppercase text-slate-500 mb-1"
+              >Nama Lengkap</label
+            >
+            <div class="relative">
+              <input
+                type="text"
+                id="reg-nama"
+                required
+                class="w-full px-4 py-2.5 pl-10 rounded-xl border border-slate-200 focus:border-amikom-purple focus:ring-4 focus:ring-purple-100 focus:outline-none transition-all text-sm text-slate-700"
+                placeholder="Nama Anda"
+              />
+              <i
+                class="fa-solid fa-user absolute left-4 top-3.5 text-slate-400 text-xs"
+              ></i>
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase text-slate-500 mb-1"
+              >Alamat Email</label
+            >
+            <div class="relative">
+              <input
+                type="email"
+                id="reg-email"
+                required
+                class="w-full px-4 py-2.5 pl-10 rounded-xl border border-slate-200 focus:border-amikom-purple focus:ring-4 focus:ring-purple-100 focus:outline-none transition-all text-sm text-slate-700"
+                placeholder="email@domain.com"
+              />
+              <i
+                class="fa-solid fa-envelope absolute left-4 top-3.5 text-slate-400 text-xs"
+              ></i>
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase text-slate-500 mb-1"
+              >Kata Sandi</label
+            >
+            <div class="relative">
+              <input
+                type="password"
+                id="reg-password"
+                required
+                class="w-full px-4 py-2.5 pl-10 rounded-xl border border-slate-200 focus:border-amikom-purple focus:ring-4 focus:ring-purple-100 focus:outline-none transition-all text-sm text-slate-700"
+                placeholder="••••••••"
+              />
+              <i
+                class="fa-solid fa-lock absolute left-4 top-3.5 text-slate-400 text-xs"
+              ></i>
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase text-slate-500 mb-1"
+              >Tipe Pengguna (Role)</label
+            >
+            <div class="relative">
+            <select
+                id="reg-role"
+                required
+                class="w-full px-4 py-2.5 pl-10 rounded-xl border border-slate-200 focus:border-amikom-purple focus:ring-4 focus:ring-purple-100 focus:outline-none transition-all text-sm text-slate-700 appearance-none bg-white"
+            >
+                <option value="client">Client (Pemesan Jasa)</option>
+            </select>              
+            <i
+                class="fa-solid fa-user-tag absolute left-4 top-3.5 text-slate-400 text-xs"
+              ></i>
+            </div>
+          </div>
+          <button
+            type="submit"
+            class="w-full py-3 bg-amikom-purple text-white font-semibold rounded-xl hover:bg-purple-700 active:scale-[0.98] transition-all text-sm shadow-lg shadow-purple-200 mt-2"
+          >
+            Daftar Sekarang
+          </button>
+        </form>
+        <div class="text-center mt-6">
+          <p class="text-xs text-slate-500">
+            Sudah memiliki akun?
+            <button
+              onclick="toggleFormAuth('login')"
+              class="text-amikom-purple font-bold hover:underline focus:outline-none"
+            >
+              Masuk di sini
+            </button>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function toggleFormAuth(type) {
+        const loginSection = document.getElementById("wrapper-login");
+        const registerSection = document.getElementById("wrapper-register");
+        if (type === "register") {
+          loginSection.classList.add("hidden");
+          registerSection.classList.remove("hidden");
+        } else {
+          registerSection.classList.add("hidden");
+          loginSection.classList.remove("hidden");
+        }
+      }
+    </script>
+
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,1279 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KerjaLepas - Platform Freelance Mahasiswa Amikom Purwokerto</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              amikom: {
+                purple: "#6D28D9", // Deep royal purple iconic Amikom
+                lightpurple: "#8B5CF6",
+                dark: "#4C1D95",
+                gold: "#F59E0B", // Gold accent from Amikom logo
+                darkgold: "#D97706",
+                slate: "#0F172A",
+              },
+            },
+            boxShadow: {
+              premium: "0 10px 30px -10px rgba(109, 40, 217, 0.15)",
+              "hover-glow": "0 20px 40px -15px rgba(109, 40, 217, 0.3)",
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        scroll-behavior: smooth;
+      }
+      .gradient-text {
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-image: linear-gradient(135deg, #6d28d9, #f59e0b);
+      }
+      .glass-card {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(16px);
+        border: 1px solid rgba(109, 40, 217, 0.08);
+      }
+      .glass-navbar {
+        background: rgba(255, 255, 255, 0.75);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(109, 40, 217, 0.06);
+      }
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: #f1f5f9;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #8b5cf6;
+        border-radius: 9999px;
+      }
+
+      /* Premium View Transitions for SPA Switching */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(12px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .animate-fade-in {
+        animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+
+      @keyframes pulse-slow {
+        0%,
+        100% {
+          opacity: 0.4;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.6;
+          transform: scale(1.05);
+        }
+      }
+      .animate-pulse-slow {
+        animation: pulse-slow 8s infinite ease-in-out;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-slate-50 text-slate-800 antialiased custom-scrollbar min-h-screen flex flex-col justify-between"
+  >
+    <div
+      id="academic-banner"
+      class="bg-gradient-to-r from-amikom-purple via-amikom-dark to-slate-900 text-white px-4 py-3.5 relative z-50"
+    >
+      <div
+        class="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-center gap-3 text-sm"
+      >
+        <div
+          class="flex flex-wrap items-center justify-center lg:justify-start gap-3"
+        >
+          <span
+            class="bg-amikom-gold text-slate-900 font-extrabold px-3 py-1 rounded-md text-xs uppercase tracking-widest animate-pulse"
+          >
+            Selamat Datang
+          </span>
+          <p class="font-medium text-center lg:text-left">
+            <span></span> 
+            <span class="text-purple-200 text-xs"
+              ></span
+            >
+          </p>
+        </div>
+          <button
+            onclick="dismissBanner()"
+            class="bg-white/20 hover:bg-white/30 text-white rounded-full p-1 transition-all"
+            title="Sembunyikan Informasi Akademik"
+          >
+            <i
+              class="fa-solid fa-xmark w-4 h-4 flex items-center justify-center"
+            ></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <nav
+      class="sticky top-0 w-full z-40 transition-all duration-300 glass-navbar shadow-sm"
+      id="navbar"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-20">
+          <div
+            class="flex-shrink-0 flex items-center cursor-pointer gap-3"
+            onclick="switchView('dashboard')"
+          >
+            <div
+              class="w-11 h-11 bg-gradient-to-tr from-amikom-purple to-amikom-lightpurple rounded-xl flex items-center justify-center text-white shadow-premium"
+            >
+              <i class="fa-solid fa-graduation-cap text-xl"></i>
+            </div>
+            <div class="flex flex-col">
+              <span
+                class="font-extrabold text-2xl tracking-tight leading-none text-slate-900"
+                >Kerja<span class="text-amikom-purple">Lepas</span></span
+              >
+              <span
+                class="text-[9px] text-slate-400 uppercase tracking-widest font-bold mt-0.5"
+                >Amikom Purwokerto</span
+              >
+            </div>
+          </div>
+
+          <div class="hidden md:flex space-x-6 items-center">
+            <button
+              id="nav-btn-dashboard"
+              onclick="switchView('dashboard')"
+              class="nav-btn px-4 py-2 rounded-xl text-amikom-purple bg-purple-50 font-bold transition-all flex items-center gap-2 text-sm"
+            >
+              <i class="fa-solid fa-house-laptop"></i> Dashboard
+            </button>
+            <button
+              id="nav-btn-layanan"
+              onclick="switchView('layanan')"
+              class="nav-btn px-4 py-2 rounded-xl text-slate-600 hover:text-amikom-purple font-semibold transition-all flex items-center gap-2 text-sm"
+            >
+              <i class="fa-solid fa-briefcase"></i> Menu Layanan
+            </button>
+            <button
+              id="nav-btn-tim"
+              onclick="switchView('tim')"
+              class="nav-btn px-4 py-2 rounded-xl text-slate-600 hover:text-amikom-purple font-semibold transition-all flex items-center gap-2 text-sm"
+            >
+              <i class="fa-solid fa-users-gear"></i> Info Anggota
+            </button>
+            <button
+              id="nav-btn-simulasi"
+              onclick="bukaPanelTransaksi()"
+              class="nav-btn bg-gradient-to-r from-amikom-purple to-amikom-lightpurple hover:from-amikom-dark hover:to-amikom-purple text-white px-5 py-2.5 rounded-full font-bold text-sm transition-all shadow-premium hover:shadow-hover-glow transform hover:-translate-y-0.5 flex items-center gap-2"
+            >
+              <i class="fa-solid fa-calculator"></i> Panel Transaksi
+            </button>            
+            <button
+              onclick="handleLogout()"
+              class="px-3 py-2 text-xs font-bold text-rose-600 hover:bg-rose-50 rounded-xl transition-all"
+            >
+              <i class="fa-solid fa-power-off"></i> Logout
+            </button>
+          </div>
+
+          <div class="md:hidden flex items-center">
+            <button
+              id="mobile-menu-btn"
+              class="text-slate-600 hover:text-amikom-purple focus:outline-none p-2 rounded-lg hover:bg-slate-100 transition-colors"
+            >
+              <i class="fa-solid fa-bars text-2xl"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div
+        id="mobile-menu"
+        class="hidden md:hidden bg-white/95 border-t border-gray-100 absolute w-full shadow-xl backdrop-blur-md"
+      >
+        <div class="px-4 pt-3 pb-6 space-y-2.5">
+          <button
+            id="mobile-btn-dashboard"
+            onclick="
+              switchView('dashboard');
+              toggleMobileMenu();
+            "
+            class="mobile-btn w-full text-left block px-4 py-3 rounded-xl text-base font-bold text-amikom-purple bg-purple-50 transition-colors"
+          >
+            <i class="fa-solid fa-house-laptop mr-2 text-sm"></i> Dashboard
+          </button>
+          <button
+            id="mobile-btn-layanan"
+            onclick="
+              switchView('layanan');
+              toggleMobileMenu();
+            "
+            class="mobile-btn w-full text-left block px-4 py-3 rounded-xl text-base font-semibold text-slate-700 hover:text-amikom-purple hover:bg-purple-50 transition-colors"
+          >
+            <i class="fa-solid fa-briefcase mr-2 text-sm text-slate-400"></i>
+            Menu Layanan
+          </button>
+          <button
+            id="mobile-btn-tim"
+            onclick="
+              switchView('tim');
+              toggleMobileMenu();
+            "
+            class="mobile-btn w-full text-left block px-4 py-3 rounded-xl text-base font-semibold text-slate-700 hover:text-amikom-purple hover:bg-purple-50 transition-colors"
+          >
+            <i class="fa-solid fa-users-gear mr-2 text-sm text-slate-400"></i>
+            Info Anggota
+          </button>
+          <button
+            id="mobile-btn-simulasi"
+            onclick="
+              bukaPanelTransaksi();
+              toggleMobileMenu();
+            "
+            class="mobile-btn w-full text-left block px-4 py-3.5 rounded-xl text-base font-bold text-white bg-gradient-to-r from-amikom-purple to-amikom-lightpurple text-center shadow-lg"
+          >
+            <i class="fa-solid fa-calculator mr-2"></i> Panel Transaksi
+          </button>
+          <button onclick="switchView('user')" class="nav-btn px-4 py-2 text-slate-600 hover:text-amikom-purple font-semibold transition-all">
+            <i class="fa-solid fa-user-pen mr-2"></i>Edit Profil
+        </button>
+          <button
+            onclick="handleLogout()"
+            class="w-full text-center block px-4 py-2.5 rounded-xl text-sm font-bold text-rose-600 bg-rose-50"
+          >
+            <i class="fa-solid fa-power-off mr-2"></i> Logout Sesi
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <main class="flex-grow">
+      <div id="view-dashboard" class="view-section animate-fade-in">
+        <section class="pt-12 pb-20 lg:pt-16 lg:pb-24 overflow-hidden relative">
+          <div
+            class="absolute top-10 right-0 -mr-20 w-[450px] h-[450px] rounded-full bg-purple-200/40 blur-[120px] animate-pulse-slow -z-10"
+          ></div>
+          <div
+            class="absolute bottom-10 left-0 -ml-20 w-[350px] h-[350px] rounded-full bg-amber-200/30 blur-[100px] animate-pulse-slow -z-10"
+          ></div>
+
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+              <span
+                class="inline-flex items-center gap-2 bg-purple-100 text-amikom-purple text-xs font-bold px-4 py-1.5 rounded-full mb-6 animate-bounce"
+              >
+                <i
+                  class="fa-solid fa-circle-nodes animate-spin text-[10px]"
+                ></i>
+                Database Cloud Atlas Terkoneksi Aktif
+              </span>
+              <h1
+                class="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6 leading-tight text-slate-900 animate-fade-in"
+              >
+                Solusi Kerja Cerdas & <br />Talenta
+                <span class="gradient-text">Profesional Amikom</span>
+              </h1>
+              <p
+                class="text-base md:text-lg text-slate-500 max-w-2xl mx-auto mb-10 leading-relaxed"
+              >
+                KerjaLepas menghubungkan kebutuhan bisnis Anda secara instan
+                dengan hasil karya nyata dan solusi dari 5 talenta pengembang
+                terbaik mahasiswa  Teknologi Informasi.
+              </p>
+
+              <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button
+                  onclick="switchView('layanan')"
+                  class="bg-gradient-to-r from-amikom-purple to-amikom-lightpurple hover:from-amikom-dark hover:to-amikom-purple text-white px-8 py-4 rounded-2xl font-bold text-base shadow-premium hover:shadow-hover-glow transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2"
+                >
+                  <i class="fa-solid fa-magnifying-glass"></i> Jelajahi Layanan
+                  Jasa
+                </button>
+                <button
+                  onclick="switchView('simulasi')"
+                  class="bg-white border-2 border-slate-200 hover:border-amikom-lightpurple text-slate-700 hover:text-amikom-purple px-8 py-4 rounded-2xl font-semibold text-base shadow-sm hover:shadow transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2"
+                >
+                  <i class="fa-solid fa-clipboard-check"></i> Kelola Transaksi
+                  (Live)
+                </button>
+              </div>
+            </div>
+
+            <div
+              class="glass-card p-6 md:p-8 rounded-3xl max-w-5xl mx-auto shadow-premium border border-purple-100/50"
+            >
+              <div
+                class="flex flex-col md:flex-row justify-between items-center mb-6 border-b border-slate-100 pb-4 gap-3"
+              >
+                <div>
+                  <h3
+                    class="text-lg font-bold text-slate-900 flex items-center gap-2.5"
+                  >
+                    <span class="flex h-3.5 w-3.5 relative">
+                      <span
+                        class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"
+                      ></span>
+                      <span
+                        class="relative inline-flex rounded-full h-3.5 w-3.5 bg-emerald-500"
+                      ></span>
+                    </span>
+                    Live 
+                  </h3>
+                  <p class="text-xs text-slate-400 mt-1">
+                    Sistem sinkronisasi otomatis mengambil dan menghitung
+                    sirkulasi data langsung dari MongoDB Atlas
+                  </p>
+                </div>
+                <span
+                  class="text-xs text-slate-400 font-mono bg-slate-100 px-3 py-1.5 rounded-lg flex items-center gap-2"
+                  id="current-time-display"
+                >
+                  <i class="fa-regular fa-clock text-slate-500"></i> Memuat
+                  waktu...
+                </span>
+              </div>
+
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                <div
+                  class="bg-purple-50/50 p-5 rounded-2xl border border-purple-100/30 text-center transition-all hover:scale-[1.02] cursor-pointer"
+                  onclick="switchView('layanan')"
+                >
+                  <div
+                    class="text-2xl md:text-3xl font-extrabold text-amikom-purple"
+                    id="stat-layanan"
+                  >
+                    5
+                  </div>
+                  <div
+                    class="text-[10px] md:text-xs text-slate-400 font-semibold uppercase tracking-wider mt-1.5"
+                  >
+                    Layanan Aktif
+                  </div>
+                </div>
+                <div
+                  class="bg-amber-50/50 p-5 rounded-2xl border border-amber-100/30 text-center transition-all hover:scale-[1.02] cursor-pointer"
+                  onclick="switchView('simulasi')"
+                >
+                  <div
+                    class="text-2xl md:text-3xl font-extrabold text-amber-500"
+                    id="stat-transaksi"
+                  >
+                    0
+                  </div>
+                  <div
+                    class="text-[10px] md:text-xs text-slate-400 font-semibold uppercase tracking-wider mt-1.5"
+                  >
+                    Total Pesanan
+                  </div>
+                </div>
+                <div
+                  class="bg-emerald-50/50 p-5 rounded-2xl border border-emerald-100/30 text-center transition-all hover:scale-[1.02] cursor-pointer"
+                  onclick="switchView('simulasi')"
+                >
+                  <div
+                    class="text-2xl md:text-3xl font-extrabold text-emerald-600"
+                    id="stat-selesai"
+                  >
+                    0
+                  </div>
+                  <div
+                    class="text-[10px] md:text-xs text-slate-400 font-semibold uppercase tracking-wider mt-1.5"
+                  >
+                    Proyek Selesai
+                  </div>
+                </div>
+                <div
+                  class="bg-blue-50/50 p-5 rounded-2xl border border-blue-100/30 text-center transition-all hover:scale-[1.02] cursor-pointer"
+                  onclick="switchView('simulasi')"
+                >
+                  <div
+                    class="text-xl md:text-2xl lg:text-3xl font-extrabold text-blue-600"
+                    id="stat-pendapatan"
+                  >
+                    Rp 0
+                  </div>
+                  <div
+                    class="text-[10px] md:text-xs text-slate-400 font-semibold uppercase tracking-wider mt-1.5"
+                  >
+                    Sirkulasi Kontrak
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div id="view-layanan" class="view-section hidden">
+        <section class="py-12 bg-white relative">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div
+              class="mb-6 flex items-center gap-2 text-xs text-slate-400 font-semibold uppercase tracking-wider"
+            >
+              <span
+                class="hover:text-amikom-purple cursor-pointer"
+                onclick="switchView('dashboard')"
+                >Home</span
+              >
+              <i class="fa-solid fa-chevron-right text-[8px]"></i>
+              <span class="text-slate-600">Layanan Jasa</span>
+            </div>
+
+            <div class="text-center mb-12">
+              <h2
+                class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4"
+              >
+                5 Menu Layanan Freelance Unggulan
+              </h2>
+              <div
+                class="w-20 h-1.5 bg-gradient-to-r from-amikom-purple to-amikom-gold mx-auto rounded-full mb-4"
+              ></div>
+              <p class="text-slate-500 max-w-2xl mx-auto text-base">
+                Sistem dirancang dengan 5 layanan premium siap garap yang
+                terhubung langsung dengan keahlian utama 5 mahasiswa anggota tim
+                kami.
+              </p>
+            </div>
+
+            <div class="max-w-xl mx-auto mb-12">
+              <div class="relative">
+                <input
+                  type="text"
+                  id="search-services"
+                  placeholder="Cari keahlian (misal: 'React', 'Figma', 'SEO')..."
+                  class="w-full px-6 py-4 pl-14 rounded-2xl border border-slate-200 focus:border-amikom-purple focus:ring-4 focus:ring-purple-100 focus:outline-none transition-all shadow-sm text-sm"
+                  onkeyup="filterServices()"
+                />
+                <i
+                  class="fa-solid fa-magnifying-glass absolute left-5 top-5 text-slate-400 text-lg"
+                ></i>
+              </div>
+            </div>
+
+            <div
+              class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+              id="layanan-container"
+            >
+              <div
+                class="service-card bg-slate-50 rounded-3xl p-8 border border-slate-100 shadow-sm hover:shadow-premium hover:bg-white transition-all duration-300 group flex flex-col justify-between"
+                data-title="web development aplikasi programmer website custom react node js html css javascript"
+              >
+                <div>
+                  <div
+                    class="w-14 h-14 bg-purple-100 text-amikom-purple rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform"
+                  >
+                    <i class="fa-solid fa-code"></i>
+                  </div>
+                  <span
+                    class="text-xs font-bold text-purple-600 bg-purple-50 px-2.5 py-1 rounded-full"
+                    >Developer: Janu Nur Arifin</span
+                  >
+                  <h3 class="text-xl font-bold mt-3 mb-3 text-slate-900">
+                    Web Development
+                  </h3>
+                  <p class="text-slate-500 mb-6 text-sm leading-relaxed">
+                    Pembuatan aplikasi web responsif, landing page, dan sistem
+                    informasi kustom menggunakan React, Node.js, dan database
+                    SQL/NoSQL.
+                  </p>
+                  <div
+                    class="flex items-center justify-between text-xs font-bold mb-6 bg-slate-100 text-slate-700 px-4 py-2.5 rounded-xl"
+                  >
+                    <span>Estimasi: 7-14 Hari</span>
+                    <span class="text-amikom-purple">Mulai Rp 1.500.000</span>
+                  </div>
+                </div>
+                <button
+                  onclick="
+                    openBookingModal(
+                      'Web Development',
+                      1500000,
+                      'Janu Nur Arifin',
+                    )
+                  "
+                  class="w-full bg-slate-900 shadow-sm hover:bg-amikom-purple text-white font-bold py-3.5 px-4 rounded-xl transition-all text-center text-xs uppercase tracking-wider flex items-center justify-center gap-2"
+                >
+                  <i class="fa-solid fa-receipt"></i> Sewa Jasa Sekarang
+                </button>
+              </div>
+
+              <div
+                class="service-card bg-slate-50 rounded-3xl p-8 border border-slate-100 shadow-sm hover:shadow-premium hover:bg-white transition-all duration-300 group flex flex-col justify-between"
+                data-title="desain grafis logo branding ui ux sosmed figma"
+              >
+                <div>
+                  <div
+                    class="w-14 h-14 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform"
+                  >
+                    <i class="fa-solid fa-compass-drafting"></i>
+                  </div>
+                  <span
+                    class="text-xs font-bold text-amber-600 bg-amber-50 px-2.5 py-1 rounded-full"
+                    >Designer: Farhan Adi Setiawan</span
+                  >
+                  <h3 class="text-xl font-bold mt-3 mb-3 text-slate-900">
+                    UI/UX & Brand Identity
+                  </h3>
+                  <p class="text-slate-500 mb-6 text-sm leading-relaxed">
+                    Perancangan antarmuka aplikasi digital (Figma), visualisasi
+                    identitas brand, pembuatan logo, dan desain konten promosi
+                    sosial media.
+                  </p>
+                  <div
+                    class="flex items-center justify-between text-xs font-bold mb-6 bg-slate-100 text-slate-700 px-4 py-2.5 rounded-xl"
+                  >
+                    <span>Estimasi: 3-7 Hari</span>
+                    <span class="text-amikom-purple">Mulai Rp 1.000.000</span>
+                  </div>
+                </div>
+                <button
+                  onclick="
+                    openBookingModal(
+                      'UI/UX & Brand Identity',
+                      800000,
+                      'Farhan Adi Setiawan',
+                    )
+                  "
+                  class="w-full bg-slate-900 shadow-sm hover:bg-amikom-purple text-white font-bold py-3.5 px-4 rounded-xl transition-all text-center text-xs uppercase tracking-wider flex items-center justify-center gap-2"
+                >
+                  <i class="fa-solid fa-receipt"></i> Sewa Jasa Sekarang
+                </button>
+              </div>
+
+              <div
+                class="service-card bg-slate-50 rounded-3xl p-8 border border-slate-100 shadow-sm hover:shadow-premium hover:bg-white transition-all duration-300 group flex flex-col justify-between"
+                data-title="digital marketing seo ads search engine dodi rianto google fb"
+              >
+                <div>
+                  <div
+                    class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform"
+                  >
+                    <i class="fa-solid fa-chart-line"></i>
+                  </div>
+                  <span
+                    class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full"
+                    >Marketer: Bagas Dwi Ananda</span
+                  >
+                  <h3 class="text-xl font-bold mt-3 mb-3 text-slate-900">
+                    Digital Marketing & SEO
+                  </h3>
+                  <p class="text-slate-500 mb-6 text-sm leading-relaxed">
+                    Strategi pemasaran mesin pencari (SEO) halaman pertama
+                    Google, manajemen iklan berbayar (Ads), dan riset analisis
+                    target pasar digital.
+                  </p>
+                  <div
+                    class="flex items-center justify-between text-xs font-bold mb-6 bg-slate-100 text-slate-700 px-4 py-2.5 rounded-xl"
+                  >
+                    <span>Estimasi: 14-30 Hari</span>
+                    <span class="text-amikom-purple">Mulai Rp 1.200.000</span>
+                  </div>
+                </div>
+                <button
+                  onclick="
+                    openBookingModal(
+                      'Digital Marketing & SEO',
+                      1200000,
+                      'Bagas Dwi Ananda',
+                    )
+                  "
+                  class="w-full bg-slate-900 shadow-sm hover:bg-amikom-purple text-white font-bold py-3.5 px-4 rounded-xl transition-all text-center text-xs uppercase tracking-wider flex items-center justify-center gap-2"
+                >
+                  <i class="fa-solid fa-receipt"></i> Sewa Jasa Sekarang
+                </button>
+              </div>
+
+              <div
+                class="service-card bg-slate-50 rounded-3xl p-8 border border-slate-100 shadow-sm hover:shadow-premium hover:bg-white transition-all duration-300 group flex flex-col justify-between"
+                data-title="video editing animasi after effects premiere youtube tiktok reels"
+              >
+                <div>
+                  <div
+                    class="w-14 h-14 bg-red-100 text-red-600 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform"
+                  >
+                    <i class="fa-solid fa-video"></i>
+                  </div>
+                  <span
+                    class="text-xs font-bold text-red-600 bg-red-50 px-2.5 py-1 rounded-full"
+                    >Fahri Dwi Kurniawan</span
+                  >
+                  <h3 class="text-xl font-bold mt-3 mb-3 text-slate-900">
+                    Video Editing & Animation
+                  </h3>
+                  <p class="text-slate-500 mb-6 text-sm leading-relaxed">
+                    Pembuatan konten video komersial premium, pengeditan
+                    pascaproduksi (Adobe Premiere), motion graphics, dan animasi
+                    kreatif (After Effects).
+                  </p>
+                  <div
+                    class="flex items-center justify-between text-xs font-bold mb-6 bg-slate-100 text-slate-700 px-4 py-2.5 rounded-xl"
+                  >
+                    <span>Estimasi: 4-10 Hari</span>
+                    <span class="text-amikom-purple">Mulai Rp 1.000.000</span>
+                  </div>
+                </div>
+                <button
+                  onclick="
+                    openBookingModal(
+                      'Video Editing & Animation',
+                      1000000,
+                      'Fahri Dwi Kurniawan',
+                    )
+                  "
+                  class="w-full bg-slate-900 shadow-sm hover:bg-amikom-purple text-white font-bold py-3.5 px-4 rounded-xl transition-all text-center text-xs uppercase tracking-wider flex items-center justify-center gap-2"
+                >
+                  <i class="fa-solid fa-receipt"></i> Sewa Jasa Sekarang
+                </button>
+              </div>
+
+              <div
+                class="service-card bg-slate-50 rounded-3xl p-8 border border-slate-100 shadow-sm hover:shadow-premium hover:bg-white transition-all duration-300 group flex flex-col justify-between lg:col-start-2"
+                data-title="copywriting content writer penulisan artikel bahasa inggris"
+              >
+                <div>
+                  <div
+                    class="w-14 h-14 bg-sky-100 text-sky-600 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform"
+                  >
+                    <i class="fa-solid fa-feather-pointed"></i>
+                  </div>
+                  <span
+                    class="text-xs font-bold text-sky-600 bg-sky-50 px-2.5 py-1 rounded-full"
+                    >Writer: Hizkia Oktavian</span
+                  >
+                  <h3 class="text-xl font-bold mt-3 mb-3 text-slate-900">
+                    Copywriting & Technical Writing
+                  </h3>
+                  <p class="text-slate-500 mb-6 text-sm leading-relaxed">
+                    Penulisan naskah iklan persuasif, artikel penunjang SEO
+                    ramah mesin pencari, serta lokalisasi penerjemahan berkas
+                    Inggris-Indonesia.
+                  </p>
+                  <div
+                    class="flex items-center justify-between text-xs font-bold mb-6 bg-slate-100 text-slate-700 px-4 py-2.5 rounded-xl"
+                  >
+                    <span>Estimasi: 2-5 Hari</span>
+                    <span class="text-amikom-purple">Mulai Rp 1.000.000</span>
+                  </div>
+                </div>
+                <button
+                  onclick="
+                    openBookingModal(
+                      'Copywriting & Technical Writing',
+                      500000,
+                      'Hizkia Oktaviana',
+                    )
+                  "
+                  class="w-full bg-slate-900 shadow-sm hover:bg-amikom-purple text-white font-bold py-3.5 px-4 rounded-xl transition-all text-center text-xs uppercase tracking-wider flex items-center justify-center gap-2"
+                >
+                  <i class="fa-solid fa-receipt"></i> Sewa Jasa Sekarang
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div id="view-tim" class="view-section hidden">
+        <section class="py-12 bg-slate-100 relative">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div
+              class="mb-6 flex items-center gap-2 text-xs text-slate-400 font-semibold uppercase tracking-wider"
+            >
+              <span
+                class="hover:text-amikom-purple cursor-pointer"
+                onclick="switchView('dashboard')"
+                >Home</span
+              >
+              <i class="fa-solid fa-chevron-right text-[8px]"></i>
+              <span class="text-slate-600">Info Anggota Kelompok</span>
+            </div>
+
+            <div class="text-center mb-16">
+              <h2
+                class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4"
+              >
+                Informasi Akademik 5 Anggota Tim
+              </h2>
+              <div
+                class="w-20 h-1.5 bg-gradient-to-r from-amikom-purple to-amikom-gold mx-auto rounded-full mb-4"
+              ></div>
+              <p class="text-slate-500 max-w-2xl mx-auto text-base">
+                Sinergi keahlian 5 mahasiswa S1 Teknologi Informasi selaku
+                perancang utama sekaligus pemilik portofolio platform
+                KerjaLepas.
+              </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+              <div
+                class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-premium transition-all duration-300 flex flex-col justify-between border border-slate-200/40"
+              >
+                <div>
+                  <div
+                    class="h-44 bg-gradient-to-br from-amikom-purple to-indigo-800 relative group overflow-hidden"
+                  >
+                    <img
+                      src="https://placehold.co/400x400/6D28D9/ffffff?text=Janu"
+                      alt="Janu"
+                      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                  </div>
+                  <div class="p-5">
+                    <h3
+                      class="text-base font-bold text-slate-900 leading-tight mb-1"
+                    >
+                      Janu Nur Arifin
+                    </h3>
+                    <p class="text-xs text-purple-600 font-semibold mb-3">
+                      Lead Web Developer
+                    </p>
+                    <p class="text-xs text-slate-500 leading-relaxed">
+                      Spesialis logika antarmuka dan penataan responsif basis
+                      data aplikasi digital.
+                    </p>
+                  </div>
+                </div>
+                <div class="p-5 pt-0 border-t border-slate-50 mt-auto">
+                  <div class="text-[10px] text-slate-400 font-mono mb-2">
+                    NIM: 25SA31A053
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-premium transition-all duration-300 flex flex-col justify-between border border-slate-200/40"
+              >
+                <div>
+                  <div
+                    class="h-44 bg-gradient-to-br from-purple-700 to-pink-700 relative group overflow-hidden"
+                  >
+                    <img
+                      src="https://placehold.co/400x400/8B5CF6/ffffff?text=Farhan"
+                      alt="Farhan"
+                      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                  </div>
+                  <div class="p-5">
+                    <h3
+                      class="text-base font-bold text-slate-900 leading-tight mb-1"
+                    >
+                      Farhan Adi Setiawan
+                    </h3>
+                    <p class="text-xs text-amber-600 font-semibold mb-3">
+                      Creative UI/UX Director
+                    </p>
+                    <p class="text-xs text-slate-500 leading-relaxed">
+                      Arsitek struktur visual, kustomisasi palet warna, dan
+                      kemudahan pengalaman pengguna.
+                    </p>
+                  </div>
+                </div>
+                <div class="p-5 pt-0 border-t border-slate-50 mt-auto">
+                  <div class="text-[10px] text-slate-400 font-mono mb-2">
+                    NIM: 25SA31A052
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-premium transition-all duration-300 flex flex-col justify-between border border-slate-200/40"
+              >
+                <div>
+                  <div
+                    class="h-44 bg-gradient-to-br from-emerald-600 to-cyan-700 relative group overflow-hidden"
+                  >
+                    <img
+                      src="https://placehold.co/400x400/10B981/ffffff?text=Bagas"
+                      alt="Bagas"
+                      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                  </div>
+                  <div class="p-5">
+                    <h3
+                      class="text-base font-bold text-slate-900 leading-tight mb-1"
+                    >
+                      Bagas Dwi Ananda
+                    </h3>
+                    <p class="text-xs text-emerald-600 font-semibold mb-3">
+                      SEO Specialist
+                    </p>
+                    <p class="text-xs text-slate-500 leading-relaxed">
+                      Pakar pemasaran digital, pencari tren pasar makro, dan
+                      optimasi struktur SEO web.
+                    </p>
+                  </div>
+                </div>
+                <div class="p-5 pt-0 border-t border-slate-50 mt-auto">
+                  <div class="text-[10px] text-slate-400 font-mono mb-2">
+                    NIM: 25SA31A050
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-premium transition-all duration-300 flex flex-col justify-between border border-slate-200/40"
+              >
+                <div>
+                  <div
+                    class="h-44 bg-gradient-to-br from-red-600 to-orange-700 relative group overflow-hidden"
+                  >
+                    <img
+                      src="https://placehold.co/400x400/EF4444/ffffff?text=Fahri"
+                      alt="Fahri"
+                      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                  </div>
+                  <div class="p-5">
+                    <h3
+                      class="text-base font-bold text-slate-900 leading-tight mb-1"
+                    >
+                      Fahri Dwi Kurniawan
+                    </h3>
+                    <p class="text-xs text-red-600 font-semibold mb-3">
+                      Multimedia Specialist
+                    </p>
+                    <p class="text-xs text-slate-500 leading-relaxed">
+                      Kreator video sinematik, ahli pemotong grafis video
+                      promosi tim KerjaLepas.
+                    </p>
+                  </div>
+                </div>
+                <div class="p-5 pt-0 border-t border-slate-50 mt-auto">
+                  <div class="text-[10px] text-slate-400 font-mono mb-2">
+                    NIM: 25SA31A055
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-premium transition-all duration-300 flex flex-col justify-between border border-slate-200/40"
+              >
+                <div>
+                  <div
+                    class="h-44 bg-gradient-to-br from-sky-600 to-blue-700 relative group overflow-hidden"
+                  >
+                    <img
+                      src="https://placehold.co/400x400/0ea5e9/ffffff?text=Hizkia"
+                      alt="Hizkia"
+                      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                  </div>
+                  <div class="p-5">
+                    <h3
+                      class="text-base font-bold text-slate-900 leading-tight mb-1"
+                    >
+                      Hizkia Oktaviana
+                    </h3>
+                    <p class="text-xs text-sky-600 font-semibold mb-3">
+                      Copywriter & Analyst
+                    </p>
+                    <p class="text-xs text-slate-500 leading-relaxed">
+                      Analis kebutuhan bisnis, perangkai kata persuasif, dan
+                      pengarsip riset teknis.
+                    </p>
+                  </div>
+                </div>
+                <div class="p-5 pt-0 border-t border-slate-50 mt-auto">
+                  <div class="text-[10px] text-slate-400 font-mono mb-2">
+                    NIM: 26SA31072
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div id="view-simulasi" class="view-section hidden">
+        <section class="py-12 bg-white relative">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div
+              class="mb-6 flex items-center gap-2 text-xs text-slate-400 font-semibold uppercase tracking-wider"
+            >
+              <span
+                class="hover:text-amikom-purple cursor-pointer"
+                onclick="switchView('dashboard')"
+                >Home</span
+              >
+              <i class="fa-solid fa-chevron-right text-[8px]"></i>
+              <span class="text-slate-600">Simulasi Cloud Atlas Database</span>
+            </div>
+
+            <div class="text-center mb-12">
+              <span
+                class="bg-purple-100 text-amikom-purple text-xs font-bold px-3 py-1.5 rounded-md uppercase tracking-wider"
+                >Terintegrasi MongoDB Cloud Atlas</span
+              >
+              <h2
+                class="text-3xl md:text-4xl font-extrabold text-slate-900 mt-3 mb-4"
+              >
+                Panel Manajemen Kontrak Transaksi
+              </h2>
+              <div
+                class="w-20 h-1.5 bg-gradient-to-r from-amikom-purple to-amikom-gold mx-auto rounded-full mb-4"
+              ></div>
+  
+            </div>
+
+            <div
+              class="bg-slate-50 rounded-2xl border border-slate-200/80 shadow-premium overflow-hidden max-w-5xl mx-auto"
+            >
+              <div
+                class="bg-gradient-to-r from-amikom-purple via-amikom-dark to-slate-900 p-5 text-white flex justify-between items-center flex-wrap gap-3"
+              >
+                <div class="flex items-center gap-2.5">
+                  <i
+                    class="fa-solid fa-list-check text-amikom-gold text-lg"
+                  ></i>
+                  <span class="font-bold text-sm md:text-base"
+                    >Daftar Kontrak Kerja Terintegrasi</span
+                  >
+                </div>
+                <button
+                  onclick="muatDataTransaksiDariServer()"
+                  class="text-xs bg-white/20 hover:bg-white/30 font-bold px-4 py-2 rounded-xl transition-colors flex items-center gap-2 shadow-sm"
+                >
+                  <i class="fa-solid fa-rotate"></i> Refresh Database Cloud
+                </button>
+              </div>
+
+              <div class="p-6">
+                <div class="overflow-x-auto custom-scrollbar">
+                  <table
+                    class="w-full text-left border-collapse text-xs md:text-sm"
+                  >
+                    <thead>
+                      <tr class="text-slate-500 border-b border-slate-200">
+                        <th class="pb-4 font-bold uppercase tracking-wider">
+                          ID Kontrak
+                        </th>
+                        <th class="pb-4 font-bold uppercase tracking-wider">
+                          Nama Klien
+                        </th>
+                        <th class="pb-4 font-bold uppercase tracking-wider">
+                          Layanan Terpilih
+                        </th>
+                        <th class="pb-4 font-bold uppercase tracking-wider">
+                          Freelancer Amikom
+                        </th>
+                        <th class="pb-4 font-bold uppercase tracking-wider">
+                          Harga
+                        </th>
+                        <th class="pb-4 font-bold uppercase tracking-wider">
+                          Status Proyek
+                        </th>
+                        <th
+                          class="pb-4 font-bold uppercase tracking-wider text-center"
+                        >   
+                          Aksi Kendali
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody
+                      id="transaction-rows"
+                      class="divide-y divide-slate-200/60"
+                    ></tbody>
+                  </table>
+                </div>
+
+                <div
+                  id="no-transaction"
+                  class="py-16 text-center text-slate-400 flex flex-col items-center justify-center"
+                >
+                  <div
+                    class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center text-slate-400 text-3xl mb-4 border border-dashed border-slate-300"
+                  >
+                    <i class="fa-solid fa-folder-open"></i>
+                  </div>
+                  <p class="font-bold text-slate-600">
+                    Belum Ada Transaksi Terdaftar di Atlas
+                  </p>
+                  <p class="text-xs text-slate-400 mt-1 max-w-sm">
+                    Daftar di atas kosong. Silakan berpindah ke halaman
+                    <strong
+                      class="text-amikom-purple hover:underline cursor-pointer"
+                      onclick="switchView('layanan')"
+                      >"Menu Layanan"</strong
+                    >
+                    dan buat pesanan resmi baru.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <div
+      id="booking-modal"
+      class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden"
+    >
+      <div
+        class="bg-white w-full max-w-md rounded-3xl shadow-premium overflow-hidden border border-purple-100 animate-[scaleUp_0.2s_ease-out_1]"
+      >
+        <div
+          class="bg-gradient-to-r from-amikom-purple to-amikom-dark text-white p-6 flex justify-between items-center"
+        >
+          <div class="flex items-center gap-3">
+            <div
+              class="w-9 h-9 bg-white/20 rounded-lg flex items-center justify-center text-white text-lg"
+            >
+              <i class="fa-solid fa-receipt text-amikom-gold"></i>
+            </div>
+            <h3 class="font-bold text-lg leading-tight">
+              Buat Kontrak Baru Cloud Atlas
+            </h3>
+          </div>
+          <button
+            onclick="closeBookingModal()"
+            class="text-white/80 hover:text-white transition-colors p-1.5 hover:bg-white/10 rounded-full"
+          >
+            <i class="fa-solid fa-xmark text-lg"></i>
+          </button>
+        </div>
+
+        <form
+          id="booking-form"
+          onsubmit="submitBookingKeServer(event)"
+          class="p-6 space-y-5"
+        >
+          <input type="hidden" id="modal-service-name" />
+          <input type="hidden" id="modal-service-price" />
+          <input type="hidden" id="modal-freelancer" />
+
+          <div>
+            <label
+              class="block text-[10px] font-bold uppercase text-slate-400 tracking-wider mb-1.5"
+              >Layanan yang Dipilih</label
+            >
+            <div
+              class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 flex flex-col"
+            >
+              <div class="font-bold text-slate-900" id="modal-label-service">
+                Memuat...
+              </div>
+              <div
+                class="text-xs text-slate-500 font-semibold mt-1"
+                id="modal-label-details"
+              >
+                Memuat detail...
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label
+              for="client-name"
+              class="block text-[10px] font-bold uppercase text-slate-500 tracking-wider mb-1.5"
+              >Nama Lengkap Klien / Instansi
+              <span class="text-rose-500">*</span></label
+            >
+            <input
+              type="text"
+              id="client-name"
+              required
+              placeholder="Masukkan nama resmi Anda..."
+              class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-amikom-purple focus:ring-4 focus:ring-purple-100 focus:outline-none transition-all text-sm"
+            />
+          </div>
+
+          <div>
+            <label
+              for="client-notes"
+              class="block text-[10px] font-bold uppercase text-slate-500 tracking-wider mb-1.5"
+              >Catatan Khusus Kebutuhan Proyek</label
+            >
+            <textarea
+              id="client-notes"
+              rows="3"
+              placeholder="Contoh: 'Desain web modern adaptif gelap-terang'..."
+              class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-amikom-purple focus:ring-4 focus:ring-purple-100 focus:outline-none transition-all text-sm custom-scrollbar"
+            ></textarea>
+          </div>
+
+          <div class="pt-2 flex justify-end gap-3 border-t border-slate-100">
+            <button
+              type="button"
+              onclick="closeBookingModal()"
+              class="px-5 py-3 rounded-xl border border-slate-200 hover:bg-slate-50 font-semibold text-sm transition-all text-slate-600"
+            >
+              Batal
+            </button>
+            <button
+              type="submit"
+              class="bg-gradient-to-r from-amikom-purple to-amikom-lightpurple hover:from-amikom-dark hover:to-amikom-purple text-white px-6 py-3 rounded-xl font-bold text-sm transition-all shadow-md"
+            >
+              Kunci Kontrak
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div
+      id="toast-notif"
+      class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none"
+    >
+      <div
+        class="bg-slate-900 text-white px-5 py-4 rounded-2xl shadow-2xl border border-slate-800 flex items-center gap-4 max-w-sm"
+      >
+        <span id="toast-icon-wrapper" class="text-2xl"> </span>
+        <div>
+          <p class="font-extrabold text-sm text-white" id="toast-title">
+            Notifikasi
+          </p>
+          <p class="text-xs text-slate-300 mt-1 leading-normal" id="toast-msg">
+            Detail aksi berhasil dijalankan.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <footer class="bg-slate-900 shadow-premium text-slate-300 py-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div
+          class="grid grid-cols-1 md:grid-cols-3 gap-12 border-b border-slate-800 pb-12 mb-12"
+        >
+          <div>
+            <div class="flex items-center mb-5 gap-3">
+              <div
+                class="w-9 h-9 bg-amikom-gold rounded-xl flex items-center justify-center text-slate-900 shadow-sm"
+              >
+                <i class="fa-solid fa-graduation-cap text-lg"></i>
+              </div>
+              <span class="font-extrabold text-xl text-white tracking-tight"
+                >Kerja<span class="text-amikom-purple">Lepas</span></span
+              >
+            </div>
+            <p class="text-slate-400 text-sm leading-relaxed">
+              Platform inovatif ciptaan Kelompok Pemrograman Web S1 Teknologi
+              Informasi Universitas Amikom Purwokerto. Dirancang presisi
+              memenuhi parameter tertinggi instruksi tugas besar.
+            </p>
+          </div>
+          <div>
+            <h4
+              class="text-white font-bold mb-5 text-xs uppercase tracking-widest text-amikom-gold"
+            >
+              Navigasi Halaman (SPA)
+            </h4>
+            <ul class="space-y-3.5 text-sm">
+              <li>
+                <button
+                  onclick="switchView('dashboard')"
+                  class="hover:text-amikom-gold transition-colors flex items-center gap-2 text-left"
+                >
+                  <i
+                    class="fa-solid fa-chevron-right text-[10px] text-slate-500"
+                  ></i>
+                  Dashboard Analitik
+                </button>
+              </li>
+              <li>
+                <button
+                  onclick="switchView('layanan')"
+                  class="hover:text-amikom-gold transition-colors flex items-center gap-2 text-left"
+                >
+                  <i
+                    class="fa-solid fa-chevron-right text-[10px] text-slate-500"
+                  ></i>
+                  Menu Jasa Freelance
+                </button>
+              </li>
+              <li>
+                <button
+                  onclick="switchView('tim')"
+                  class="hover:text-amikom-gold transition-colors flex items-center gap-2 text-left"
+                >
+                  <i
+                    class="fa-solid fa-chevron-right text-[10px] text-slate-500"
+                  ></i>
+                  Profil Anggota Kelompok
+                </button>
+              </li>
+              <li>
+                <button
+                  onclick="switchView('simulasi')"
+                  class="hover:text-amikom-gold transition-colors flex items-center gap-2 text-left"
+                >
+                  <i
+                    class="fa-solid fa-chevron-right text-[10px] text-slate-500"
+                  ></i>
+                  Panel Simulasi Kontrak
+                </button>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4
+              class="text-white font-bold mb-5 text-xs uppercase tracking-widest text-amikom-gold"
+            >
+              Kontak Kami
+            </h4>
+            <ul class="space-y-3.5 text-sm text-slate-400">
+              <li class="flex items-start gap-3">
+                <i class="fa-solid fa-envelope mt-1 text-slate-500 text-xs"></i>
+                <span>Kelompok8@gmail.com </span>
+              </li>
+              <li class="flex items-start gap-3">
+                <i class="fa-solid fa-phone mt-1 text-slate-500 text-xs"></i>
+                <span>082218516667</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <i
+                  class="fa-solid fa-map-location-dot mt-1 text-slate-500 text-xs text-left"
+                ></i>
+                <span
+                  >Jl. Letjend Pol. Soemarto, Watumas, Purwanegara, Kec.
+                  Purwokerto Utara, Jawa Tengah, Indonesia</span
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div
+          class="flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 gap-4"
+        >
+          <p>&copy; 2026 KerjaLepas Platform. Universitas Amikom Purwokerto.</p>
+          <div class="flex items-center gap-1.5">
+            <span>Dikembangkan dengan</span>
+            <i class="fa-solid fa-heart text-rose-500 animate-pulse"></i>
+            <span>untuk Penilaian Terbaik</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
